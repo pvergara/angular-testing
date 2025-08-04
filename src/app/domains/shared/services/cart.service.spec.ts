@@ -37,20 +37,14 @@ describe('CartService', () => {
     expect(spectator.service.total()).toEqual(price + price2);
   });
   it('Add to card to one product with negative price', () => {
-    const innerMockProduct = createFakeProduct({
-      ...mockProduct1,
-      price: -price,
-    });
+    const innerMockProduct = createFakeProduct({ price: -price });
     spectator.service.addToCart(innerMockProduct);
 
     expect(spectator.service.cart()).toEqual([innerMockProduct]);
     expect(spectator.service.total()).toEqual(-price);
   });
   it('Add to card to one product with floating number price', () => {
-    const innerMockProduct = createFakeProduct({
-      ...mockProduct1,
-      price: price + 0.66,
-    });
+    const innerMockProduct = createFakeProduct({ price: price + 0.66 });
     spectator.service.addToCart(innerMockProduct);
 
     expect(spectator.service.cart()).toEqual([innerMockProduct]);
