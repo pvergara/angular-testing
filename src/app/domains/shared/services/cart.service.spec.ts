@@ -2,42 +2,15 @@ import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
 
 import { CartService } from '@shared/services/cart.service';
 import { Product } from '@shared/models/product.model';
+import { createFakeProduct } from '@shared/models/product.mocks';
 
 describe('CartService', () => {
   let spectator: SpectatorService<CartService>;
   const createService = createServiceFactory(CartService);
   const price = 100;
   const price2 = 10;
-  const mockProduct1: Product = {
-    id: 1,
-    title: 'title',
-    price: price,
-    description: 'description',
-    images: [],
-    creationAt: new Date().toISOString(),
-    category: {
-      id: 0,
-      name: '',
-      image: '',
-      slug: '',
-    },
-    slug: '',
-  };
-  const mockProduct2: Product = {
-    id: 2,
-    title: 'title',
-    price: price2,
-    description: 'description',
-    images: [],
-    creationAt: new Date().toISOString(),
-    category: {
-      id: 0,
-      name: '',
-      image: '',
-      slug: '',
-    },
-    slug: '',
-  };
+  const mockProduct1: Product = createFakeProduct({ price: price });
+  const mockProduct2: Product = createFakeProduct({ price: price2 });
 
   beforeEach(() => (spectator = createService()));
 
@@ -64,20 +37,20 @@ describe('CartService', () => {
     expect(spectator.service.total()).toEqual(price + price2);
   });
   it('Add to card to one product with negative price', () => {
-    const innerMockProduct = {
+    const innerMockProduct = createFakeProduct({
       ...mockProduct1,
       price: -price,
-    };
+    });
     spectator.service.addToCart(innerMockProduct);
 
     expect(spectator.service.cart()).toEqual([innerMockProduct]);
     expect(spectator.service.total()).toEqual(-price);
   });
   it('Add to card to one product with floating number price', () => {
-    const innerMockProduct = {
+    const innerMockProduct = createFakeProduct({
       ...mockProduct1,
       price: price + 0.66,
-    };
+    });
     spectator.service.addToCart(innerMockProduct);
 
     expect(spectator.service.cart()).toEqual([innerMockProduct]);
