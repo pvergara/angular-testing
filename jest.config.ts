@@ -1,9 +1,10 @@
 import { Config } from 'jest';
 
 const config: Config = {
+  rootDir: '.',
   moduleNameMapper: {
-    '^@shared/(.*)$': '<rootDir>/src/app/shared/$1',
-    '^@products/(.*)$': '<rootDir>/src/app/products/$1',
+    '^@shared/(.*)$': '<rootDir>/src/app/domains/shared/$1',
+    '^@products/(.*)$': '<rootDir>/src/app/domains/products/$1',
     '^@env/(.*)$': '<rootDir>/src/environments/$1',
   },
   collectCoverage: true,
